@@ -1,5 +1,7 @@
 # Cyber Resilience AI Agent
 
+![Resilio](https://socialify.git.ci/uts58/resilio/image?custom_language=Python&font=Inter&forks=1&language=1&name=1&pattern=Solid&stargazers=1&theme=Light)
+
 [![CI](https://github.com/uts58/resilio/actions/workflows/ci.yml/badge.svg)](https://github.com/uts58/resilio/actions/workflows/ci.yml)
 
 An AI-powered cybersecurity advisor for small and mid-sized businesses, providing intelligent guidance on security controls, risk assessment, and budget planning.
