@@ -1,0 +1,77 @@
+services:
+  chroma:
+    image: chromadb/chroma:1.5.9
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    networks:
+      - cyber-net
+
+  tei:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.9.3
+    ports:
+      - "8002:80"
+    command: --model-id sentence-transformers/all-MiniLM-L6-v2 --port 80
+    volumes:
+      - tei_cache:/data
+    networks:
+      - cyber-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 12
+      start_period: 120s
+
+  mcp-server:
+    build: .
+    command: python -m mcp_server
+    ports:
+      - "8001:8001"
+    environment:
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+      - MCP_PORT=8001
+      - TEI_URL=http://tei:80
+    depends_on:
+      chroma:
+        condition: service_started
+      tei:
+        condition: service_healthy
+    networks:
+      - cyber-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost',8001),2); s.close()"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - MCP_SERVER_URL=http://mcp-server:8001/mcp
+      - LANGFUSE_HOST=http://langfuse-server:3000
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY:-}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY:-}
+    depends_on:
+      mcp-server:
+        condition: service_healthy
+    networks:
+      - cyber-net
+
+networks:
+  cyber-net:
+    driver: bridge
+
+volumes:
+  chroma_data:
+  tei_cache:

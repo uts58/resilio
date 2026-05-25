@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you reference this project, please cite it as below."
+title: "Resilio: AI Cybersecurity Agent for SMBs"
+abstract: >-
+  An AI-powered cybersecurity advisor for small and mid-sized businesses.
+  Combines retrieval-augmented generation (RAG) over NIST CSF 2.0,
+  NIST SP 800-53, and CIS Controls v8 with a tool-using ReAct agent
+  for risk math, IT budget estimation, and ROSI/ALE/SLE analysis.
+  Exposes tools over a Model Context Protocol (MCP) HTTP server.
+authors:
+  - family-names: Saha
+    given-names: Utsha
+    alias: uts58
+type: software
+license: MIT
+repository-code: "https://github.com/uts58/resilio"
+url: "https://github.com/uts58/resilio"
+keywords:
+  - artificial-intelligence
+  - llm
+  - large-language-models
+  - rag
+  - retrieval-augmented-generation
+  - langchain
+  - langgraph
+  - mcp
+  - model-context-protocol
+  - cybersecurity
+  - nist-csf
+  - nist-800-53
+  - cis-controls
+  - risk-management
+  - ragas
+  - langfuse
+  - llmops
+  - ai-agent

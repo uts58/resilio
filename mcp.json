@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "resilio-tools": {
+      "url": "http://localhost:8001/mcp",
+      "transport": "streamable-http"
+    }
+  }
+}

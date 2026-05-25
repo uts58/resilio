@@ -1,0 +1,18 @@
+[theme]
+base = "light"
+
+[client]
+toolbarMode = "minimal"
+
+[ui]
+hideTopBar = true
+
+#[browser]
+#showSidebarNavigation = false
+
+[server]
+fileWatcherType = "poll"
+
+
+[browser]
+gatherUsageStats = false
